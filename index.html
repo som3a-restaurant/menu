@@ -1,70 +1,487 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Restaurant Menus</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SOM3A Restaurant — Menu</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600&family=Mulish:wght@400;500;700;800&display=swap"
       rel="stylesheet"
     />
+
     <style>
+      :root {
+        --bg: #060a12;
+        --bg-soft: #0c1220;
+        --card: #0f1626;
+        --card-line: #1c2740;
+        --accent: #2f7dff;
+        --accent-bright: #6fb0ff;
+        --accent-2: #c1272d;
+        --cream: #f4f7fb;
+        --muted: #7c88a3;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
       body {
-        font-family: "Oswald", sans-serif;
+        margin: 0;
+        font-family: "Mulish", sans-serif;
+        background: var(--bg);
+        background-image: radial-gradient(
+            circle at 12% 8%,
+            rgba(47, 125, 255, 0.14),
+            transparent 42%
+          ),
+          radial-gradient(
+            circle at 88% 92%,
+            rgba(47, 125, 255, 0.1),
+            transparent 42%
+          );
+        color: var(--cream);
         text-align: center;
-        background-color: #b6d0e2;
-        color: black;
+        padding: 0 0 64px;
       }
+
+      /* ---------- Header ---------- */
+
+      header {
+        padding: 56px 20px 40px;
+      }
+
+      .kicker {
+        display: inline-block;
+        font-family: "Oswald", sans-serif;
+        font-size: 0.8rem;
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 14px;
+      }
+
       h1 {
-        font-size: 3em;
-        margin-bottom: 20px;
+        font-family: "Anton", sans-serif;
+        font-weight: 400;
+        font-size: clamp(2.6rem, 9vw, 4.5rem);
+        letter-spacing: 0.02em;
+        margin: 0;
+        color: var(--cream);
+        text-shadow: 0 0 24px rgba(232, 121, 26, 0.25);
       }
-      img {
-        width: 100%; /* Make images 100% of the container width */
-        max-width: 100%; /* Ensure images don't exceed container width */
-        margin: 20px 0;
-        border: 1px solid #ccc;
-        border-radius: 5px;
+
+      .tagline {
+        margin-top: 10px;
+        font-family: "Oswald", sans-serif;
+        font-size: 0.95rem;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
+
+      .tagline .ar {
+        font-family: Tahoma, "Segoe UI", sans-serif;
+        color: var(--cream);
+      }
+
+      /* ---------- Divider ---------- */
+
+      .perf {
+        max-width: 220px;
+        margin: 8px auto 48px;
+        height: 3px;
+        border-radius: 3px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--accent),
+          transparent
+        );
+        opacity: 0.85;
+      }
+
+      /* ---------- Menu boards (zoomable) ---------- */
+
+      main {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 0 16px;
+      }
+
+      .menu-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        margin-bottom: 60px;
+      }
+
+      .board {
+        position: relative;
+        background: var(--card);
+        border: 1px solid var(--card-line);
+        border-radius: 14px;
+        padding: 10px;
+        opacity: 0;
+        transform: translateY(18px);
+        animation: rise 0.6s ease forwards;
+        animation-delay: calc(var(--i) * 0.15s);
+        box-shadow: 0 20px 44px rgba(0, 0, 0, 0.45);
+      }
+
+      .board-btn {
+        display: block;
+        width: 100%;
+        padding: 0;
+        border: none;
+        background: none;
+        cursor: zoom-in;
+        overflow: hidden;
+        border-radius: 8px;
+      }
+
+      .board-btn img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        transition: transform 0.45s ease;
+      }
+
+      .board-btn:hover img,
+      .board-btn:focus-visible img {
+        transform: scale(1.06);
+      }
+
+      .board-btn:focus-visible {
+        outline: 2px solid var(--accent-bright);
+        outline-offset: 3px;
+      }
+
+      .zoom-hint {
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(6, 10, 18, 0.72);
+        border: 1px solid var(--card-line);
+        color: var(--cream);
+        font-family: "Oswald", sans-serif;
+        font-size: 0.7rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        padding: 7px 12px;
+        border-radius: 999px;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .board:hover .zoom-hint {
+        opacity: 1;
+      }
+
+      .zoom-hint svg {
+        width: 13px;
+        height: 13px;
+        fill: var(--accent-bright);
+      }
+
+      .board .stub {
+        margin-top: 14px;
+        font-family: "Oswald", sans-serif;
+        font-size: 0.72rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      /* mobile: hint is always visible since there's no hover */
+      @media (hover: none) {
+        .zoom-hint {
+          opacity: 1;
+          top: auto;
+          bottom: 14px;
+          right: 14px;
+        }
+        .board-btn:active img {
+          transform: scale(1.02);
+        }
+      }
+
+      @keyframes rise {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ---------- Lightbox ---------- */
+
+      .lightbox {
+        position: fixed;
+        inset: 0;
+        background: rgba(3, 5, 10, 0.92);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
+        padding: 24px;
+        overflow: auto;
+      }
+
+      .lightbox.open {
+        display: flex;
+      }
+
+      .lightbox img {
+        max-width: 100%;
+        width: auto;
+        max-height: none;
+        border-radius: 8px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        margin: auto;
+      }
+
+      .lightbox-close {
+        position: fixed;
+        top: 18px;
+        right: 18px;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 1px solid var(--card-line);
+        background: var(--card);
+        color: var(--cream);
+        font-size: 1.4rem;
+        line-height: 1;
+        cursor: pointer;
+        z-index: 101;
+      }
+
+      /* ---------- Delivery section ---------- */
+
+      .delivery {
+        margin-top: 8px;
+      }
+
+      .delivery h2 {
+        font-family: "Anton", sans-serif;
+        font-weight: 400;
+        font-size: clamp(1.7rem, 5vw, 2.4rem);
+        color: var(--accent);
+        margin: 0 0 6px;
+      }
+
+      .delivery .sub {
+        font-family: "Oswald", sans-serif;
+        font-size: 0.8rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 32px;
+      }
+
+      .branch-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 24px;
+      }
+
+      .branch {
+        background: var(--bg-soft);
+        border: 1px solid var(--card-line);
+        border-radius: 10px;
+        padding: 28px 22px;
+        text-align: center;
+      }
+
+      .branch-name {
+        font-family: "Oswald", sans-serif;
+        font-size: 1rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--cream);
+        margin-bottom: 16px;
+      }
+
+      .call-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--accent);
+        color: #ffffff;
+        font-family: "Mulish", sans-serif;
+        font-weight: 800;
+        font-size: 1.1rem;
+        letter-spacing: 0.02em;
+        text-decoration: none;
+        padding: 12px 22px;
+        border-radius: 999px;
+        transition: background 0.25s ease, transform 0.25s ease;
+      }
+
+      .call-btn:hover {
+        background: var(--accent-bright);
+        transform: translateY(-2px);
+      }
+
+      .call-btn svg {
+        width: 18px;
+        height: 18px;
+        fill: #ffffff;
+      }
+
+      .call-hint {
+        margin-top: 10px;
+        font-size: 0.75rem;
+        color: var(--muted);
+      }
+
+      footer {
+        margin-top: 56px;
+        font-family: "Oswald", sans-serif;
+        font-size: 0.75rem;
+        letter-spacing: 0.15em;
+        color: var(--muted);
+        text-transform: uppercase;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .board {
+          animation: none;
+          opacity: 1;
+          transform: none;
+        }
+        .board-btn:hover img,
+        .board-btn:focus-visible img,
+        .call-btn:hover {
+          transform: none;
+        }
       }
     </style>
   </head>
   <body>
-    <h1>SOM3A Restaurant</h1>
+    <header>
+      <span class="kicker">Delivery Menu</span>
+      <h1>SOM3A Restaurant</h1>
+      <p class="tagline">
+        Fresh off the grill, straight to your door
+        <span class="ar" lang="ar" dir="rtl">— قائمة الطلب</span>
+      </p>
+    </header>
 
-    <div>
-      <img src="ششششششش.webp" alt="Menu 1" />
-      <br />  
-      <img src="لالالالالالا.webp" alt="Menu 2" />
-       <br />  
-      <img src="ChatGPT Image Aug 14, 2026, 12_52_44 PM.png" alt="tel below" />
-      <img src="ChatGPT Image Aug 14, 2026, 12_52_40 PM.png" alt="branches tel" />
-      
-    </div> 
-     <!-- <div>
-      <img
-        src="https://dl.dropboxusercontent.com/scl/fi/gw3bf9mr0qz5d19ygq3z3/.webp?rlkey=y4n8prqk0oxdzlnkmxw5za8m8&st=azgrnpkf&raw=1"
-        alt="Menu 1"
-      />
-      <br />
-      <img
-        src="https://dl.dropboxusercontent.com/scl/fi/45nqhxau7s2iqpm9ctijd/.webp?rlkey=p9pjzc1cblv0x7u3afoym9twh&st=dnx7chg9&raw=1"
-        alt="Menu 2"
-      />
-    </div> -->
+    <div class="perf" aria-hidden="true"></div>
 
-    <div>
-      <h1>For Delivery</h1>
-      <h1>Segar Branch</h1>
-      <h1>01010219212</h1>
-      <h1>El Hekma Branch</h1>
-      <h1>01553718054</h1>
+    <main>
+      <section class="menu-stack">
+        <div class="board" style="--i:0">
+          <button
+            class="board-btn"
+            type="button"
+            data-full="ششششششش.webp"
+            aria-label="Open Menu 1 full size"
+          >
+            <img src="ششششششش.webp" alt="Menu board 1: Gourmet, mixes, seafood, chicken and meats with prices" />
+          </button>
+          <span class="zoom-hint" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 5L20.5 19l-5-5zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z"/></svg>
+            Tap to zoom
+          </span>
+          <div class="stub">Menu · Board 1</div>
+        </div>
+
+        <div class="board" style="--i:1">
+          <button
+            class="board-btn"
+            type="button"
+            data-full="لالالالالالا.webp"
+            aria-label="Open Menu 2 full size"
+          >
+            <img src="لالالالالالا.webp" alt="Menu board 2: crepes, cheese and pastrami, sweets, potato mixes, sauces and add-ons with prices" />
+          </button>
+          <span class="zoom-hint" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 5L20.5 19l-5-5zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z"/></svg>
+            Tap to zoom
+          </span>
+          <div class="stub">Menu · Board 2</div>
+        </div>
+      </section>
+
+      <section class="delivery">
+        <h2>For Delivery</h2>
+        <p class="sub">Tap a branch to call</p>
+
+        <div class="branch-grid">
+          <div class="branch">
+            <div class="branch-name">Segar Branch</div>
+            <a class="call-btn" href="tel:+201010219212">
+              <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.3 21 3 13.7 3 4.7c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1.1l-2.1 2.4z"/></svg>
+              010 1021 9212
+            </a>
+            <div class="call-hint">01010219212</div>
+          </div>
+
+          <div class="branch">
+            <div class="branch-name">El Hekma Branch</div>
+            <a class="call-btn" href="tel:+201553718054">
+              <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.3 21 3 13.7 3 4.7c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1.1l-2.1 2.4z"/></svg>
+              015 5371 8054
+            </a>
+            <div class="call-hint">01553718054</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>SOM3A Restaurant · Delivery Only</footer>
+
+    <div class="lightbox" id="lightbox">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+      <img id="lightboxImg" src="" alt="Full size menu board" />
     </div>
+
+    <script>
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImg = document.getElementById("lightboxImg");
+      const closeBtn = document.getElementById("lightboxClose");
+
+      function openLightbox(src, alt) {
+        lightboxImg.src = src;
+        lightboxImg.alt = alt;
+        lightbox.classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      document.querySelectorAll(".board-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const full = btn.getAttribute("data-full");
+          const alt = btn.querySelector("img").alt;
+          openLightbox(full, alt);
+        });
+      });
+
+      closeBtn.addEventListener("click", closeLightbox);
+      lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) closeLightbox();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeLightbox();
+      });
+    </script>
   </body>
 </html>
-
-
-
-
-
-
-
