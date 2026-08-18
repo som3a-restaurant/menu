@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -37,7 +37,8 @@
         margin: 0;
         font-family: "Mulish", sans-serif;
         background: var(--bg);
-        background-image: radial-gradient(
+        background-image:
+          radial-gradient(
             circle at 12% 8%,
             rgba(47, 125, 255, 0.14),
             transparent 42%
@@ -327,7 +328,9 @@
         text-decoration: none;
         padding: 12px 22px;
         border-radius: 999px;
-        transition: background 0.25s ease, transform 0.25s ease;
+        transition:
+          background 0.25s ease,
+          transform 0.25s ease;
       }
 
       .call-btn:hover {
@@ -368,48 +371,86 @@
           transform: none;
         }
       }
+
+      .visitor-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 10px;
+        padding: 5px 12px;
+        background: var(--bg-soft);
+        border: 1px solid var(--card-line);
+        border-radius: 999px;
+        font-family: "Oswald", sans-serif;
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+      }
+
+      .visitor-badge svg {
+        width: 12px;
+        height: 12px;
+        fill: var(--accent);
+      }
+
+      .visitor-badge span {
+        color: var(--accent-bright);
+        font-weight: 700;
+      }
     </style>
   </head>
   <body>
     <header>
       <span class="kicker">Delivery Menu</span>
       <h1>SOM3A Restaurant</h1>
-      <p class="tagline">
-        Fresh off the grill, straight to your door
-      </p>
+      <p class="tagline">Fresh off the grill, straight to your door</p>
     </header>
 
     <div class="perf" aria-hidden="true"></div>
 
     <main>
       <section class="menu-stack">
-        <div class="board" style="--i:0">
+        <div class="board" style="--i: 0">
           <button
             class="board-btn"
             type="button"
             data-full="ششششششش.webp"
             aria-label="Open Menu 1 full size"
           >
-            <img src="ششششششش.webp" alt="Menu board 1: Gourmet, mixes, seafood, chicken and meats with prices" />
+            <img
+              src="ششششششش.webp"
+              alt="Menu board 1: Gourmet, mixes, seafood, chicken and meats with prices"
+            />
           </button>
           <span class="zoom-hint" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 5L20.5 19l-5-5zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z"/></svg>
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 5L20.5 19l-5-5zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z"
+              />
+            </svg>
             Tap to zoom
           </span>
           <div class="stub">Menu · Board 1</div>
         </div>
 
-        <div class="board" style="--i:1">
+        <div class="board" style="--i: 1">
           <button
             class="board-btn"
             type="button"
             data-full="لالالالالالا.webp"
             aria-label="Open Menu 2 full size"
           >
-            <img src="لالالالالالا.webp" alt="Menu board 2: crepes, cheese and pastrami, sweets, potato mixes, sauces and add-ons with prices" />
+            <img
+              src="لالالالالالا.webp"
+              alt="Menu board 2: crepes, cheese and pastrami, sweets, potato mixes, sauces and add-ons with prices"
+            />
           </button>
           <span class="zoom-hint" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 5L20.5 19l-5-5zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z"/></svg>
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 5L20.5 19l-5-5zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z"
+              />
+            </svg>
             Tap to zoom
           </span>
           <div class="stub">Menu · Board 2</div>
@@ -424,7 +465,11 @@
           <div class="branch">
             <div class="branch-name">Segar Branch</div>
             <a class="call-btn" href="tel:+201010219212">
-              <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.3 21 3 13.7 3 4.7c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1.1l-2.1 2.4z"/></svg>
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.3 21 3 13.7 3 4.7c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1.1l-2.1 2.4z"
+                />
+              </svg>
               010 1021 9212
             </a>
             <div class="call-hint">01010219212</div>
@@ -433,7 +478,11 @@
           <div class="branch">
             <div class="branch-name">El Hekma Branch</div>
             <a class="call-btn" href="tel:+201553718054">
-              <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.3 21 3 13.7 3 4.7c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1.1l-2.1 2.4z"/></svg>
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.3 21 3 13.7 3 4.7c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1.1l-2.1 2.4z"
+                />
+              </svg>
               015 5371 8054
             </a>
             <div class="call-hint">01553718054</div>
@@ -442,10 +491,22 @@
       </section>
     </main>
 
-    <footer>SOM3A Restaurant · Delivery Only</footer>
+    <footer>
+      SOM3A Restaurant · Delivery Only
+      <div class="visitor-badge">
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"
+          />
+        </svg>
+        Visitors: <span id="visitorCount">—</span>
+      </div>
+    </footer>
 
     <div class="lightbox" id="lightbox">
-      <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+      <button class="lightbox-close" id="lightboxClose" aria-label="Close">
+        &times;
+      </button>
       <img id="lightboxImg" src="" alt="Full size menu board" />
     </div>
 
@@ -481,6 +542,21 @@
       document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") closeLightbox();
       });
+    </script>
+    <script>
+      (async function () {
+        const el = document.getElementById("visitorCount");
+        try {
+          // Free, no-signup hit counter — swap "som3a-restaurant" for a unique namespace
+          const res = await fetch(
+            "https://api.counterapi.dev/v1/som3a-restaurant/site-visits/up",
+          );
+          const data = await res.json();
+          el.textContent = data.count ?? "—";
+        } catch (e) {
+          el.textContent = "—";
+        }
+      })();
     </script>
   </body>
 </html>
