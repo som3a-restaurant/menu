@@ -375,27 +375,26 @@
       .visitor-badge {
         display: inline-flex;
         align-items: center;
-        gap: 6px;
-        margin-top: 10px;
-        padding: 5px 12px;
+        gap: 8px;
+        margin-top: 14px;
+        padding: 5px 14px;
         background: var(--bg-soft);
         border: 1px solid var(--card-line);
         border-radius: 999px;
-        font-family: "Oswald", sans-serif;
-        font-size: 0.68rem;
-        letter-spacing: 0.12em;
-        color: var(--muted);
       }
 
       .visitor-badge svg {
         width: 12px;
         height: 12px;
         fill: var(--accent);
+        flex-shrink: 0;
       }
 
-      .visitor-badge span {
-        color: var(--accent-bright);
-        font-weight: 700;
+      .visitor-badge img {
+        height: 18px;
+        display: block;
+        border-radius: 4px;
+        vertical-align: middle;
       }
     </style>
   </head>
@@ -404,6 +403,7 @@
       <span class="kicker">Delivery Menu</span>
       <h1>SOM3A Restaurant</h1>
       <p class="tagline">Fresh off the grill, straight to your door</p>
+      <p class="tagline">Classy & Delicious</p>
     </header>
 
     <div class="perf" aria-hidden="true"></div>
@@ -492,14 +492,18 @@
     </main>
 
     <footer>
-      SOM3A Restaurant · Delivery Only
+      SOM3A Restaurant · Classy & Delicious
+      <br />
       <div class="visitor-badge">
         <svg viewBox="0 0 24 24">
           <path
             d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"
           />
         </svg>
-        Visitors: <span id="visitorCount">—</span>
+        <img
+          src="https://visitor-badge.laobi.icu/badge?page_id=som3a-restaurant-menu-2026&left_color=0f1626&right_color=2f7dff&left_text=Visitors"
+          alt="visitor count"
+        />
       </div>
     </footer>
 
@@ -547,12 +551,12 @@
       (async function () {
         const el = document.getElementById("visitorCount");
         try {
-          // Free, no-signup hit counter — swap "som3a-restaurant" for a unique namespace
           const res = await fetch(
-            "https://api.counterapi.dev/v1/som3a-restaurant/site-visits/up",
+            "https://api.counterapi.dev/v2/som3a-restaurant-menu-2026/site-visits/up",
+            { headers: { "Content-Type": "application/json" } },
           );
           const data = await res.json();
-          el.textContent = data.count ?? "—";
+          el.textContent = data?.data?.up_count ?? data?.count ?? "—";
         } catch (e) {
           el.textContent = "—";
         }
